@@ -3,35 +3,31 @@
 ## 1. Диаграмма прецедентов (PlantUML)
 Ниже представлен текстовый код диаграммы Use Case. Расширение PlantUML в VS Code автоматически визуализирует её.
 
-```plantuml
-@startuml
-left to right direction
-skinparam packageStyle rectangle
+```mermaid
+graph LR
+    Client((Клиент))
+    Manager((Менеджер))
 
-actor "Клиент" as client
-actor "Менеджер" as manager
+    subgraph Система Проката Автомобилей
+        UC1(Регистрация и авторизация)
+        UC2(Просмотр каталога авто)
+        UC3(Онлайн-бронирование)
+        UC4(Расчет стоимости)
+        UC5(Управление статусами авто)
+        UC6(Просмотр активных заказов)
+        UC7(Оформление выдачи/возврата)
+    end
 
-rectangle "Система Проката Автомобилей" {
-  usecase "Регистрация и авторизация" as UC1
-  usecase "Просмотр каталога авто" as UC2
-  usecase "Онлайн-бронирование" as UC3
-  usecase "Расчет стоимости" as UC4
-  usecase "Управление статусами авто" as UC5
-  usecase "Просмотр активных заказов" as UC6
-  usecase "Оформление выдачи/возврата" as UC7
-}
+    Client --> UC1
+    Client --> UC2
+    Client --> UC3
+    UC3 -.->|include| UC4
 
-client --> UC1
-client --> UC2
-client --> UC3
-
-UC3 ..> UC4 : <<include>>
-
-manager --> UC5
-manager --> UC6
-manager --> UC7
-@endum
+    Manager --> UC5
+    Manager --> UC6
+    Manager --> UC7
 ```
+
 
 ## 2. Спецификация основных сценариев
 

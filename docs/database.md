@@ -3,60 +3,39 @@
 ## 1. ER-диаграмма данных (PlantUML)
 Текстовый код для визуализации связей между таблицами базы данных.
 
-```plantuml
-@startuml
-hide circle
-skinparam linetype ortho
+```mermaid
+erDiagram
+    CARS {
+        int car_id PK
+        string brand
+        string model
+        string license_plate
+        int year
+        string car_class
+        decimal daily_rate
+        string status
+    }
+    CLIENTS {
+        int client_id PK
+        string full_name
+        string phone
+        string email
+        int driving_experience
+    }
+    BOOKINGS {
+        int booking_id PK
+        int car_id FK
+        int client_id FK
+        date start_date
+        date end_date
+        decimal total_cost
+        string status
+    }
 
-entity "Cars (Автомобили)" as cars {
-  * car_id : INT (PK)
-  --
-  * brand : VARCHAR (Марка)
-  * model : VARCHAR (Модель)
-  * license_plate : VARCHAR (Госномер)
-  * year : INT (Год выпуска)
-  * car_class : VARCHAR (Класс авто)
-  * daily_rate : DECIMAL (Тариф в сутки)
-  * status : VARCHAR (Статус: Доступен/В прокате/ТО)
-}
-
-entity "Clients (Клиенты)" as clients {
-  * client_id : INT (PK)
-  --
-  * full_name : VARCHAR (ФИО)
-  * phone : VARCHAR (Телефон)
-  * email : VARCHAR (Email)
-  * passport_data : VARCHAR (Паспорт)
-  * driving_experience : INT (Стаж вождения)
-  * registration_date : DATE (Дата регистрации)
-}
-
-entity "Bookings (Бронирования)" as bookings {
-  * booking_id : INT (PK)
-  --
-  * car_id : INT (FK) -> Cars
-  * client_id : INT (FK) -> Clients
-  * start_date : DATE (Дата начала)
-  * end_date : DATE (Дата окончания)
-  * total_cost : DECIMAL (Итоговая стоимость)
-  * deposit_amount : DECIMAL (Сумма залога)
-  * status : VARCHAR (Статус заказа)
-}
-
-entity "Reviews (Отзывы)" as reviews {
-  * review_id : INT (PK)
-  --
-  * booking_id : INT (FK) -> Bookings
-  * rating : INT (Оценка 1-5)
-  * comment : TEXT (Комментарий)
-  * created_at : TIMESTAMP (Дата отзыва)
-}
-
-cars "1" -- "0..*" bookings : "бронируется в"
-clients "1" -- "0..*" bookings : "оформляет"
-bookings "1" -- "0..1" reviews : "получает"
-@endum
+    CARS ||--o{ BOOKINGS : "бронируется в"
+    CLIENTS ||--o{ BOOKINGS : "оформляет"
 ```
+
 
 ## 2. Спецификация таблиц (Словарь данных)
 
